@@ -366,7 +366,10 @@ model1 <- lm(Global_Sales~NA_Sales,
              data=sales2)
 
 # View the model.
-view(model1)
+coefficients(model1)
+
+plot(sales2$NA_Sales,sales2$Global_Sales)
+abline(coefficients(model1))
 
 # View more outputs for the model - the full regression table.
 summary(model1)
@@ -417,7 +420,6 @@ library(dplyr)
 logEU_Sales <- mutate(sales2, 
               logEU_Sales =log(EU_Sales))
 
-
 # View new object with new variable.
 head(logEU_Sales)
 # Remove rows with na or infinite values:
@@ -430,10 +432,10 @@ model4 <- lm(Global_Sales~logEU_Sales,
 summary(model4)
 
 
-# Plot model2:
+# Plot model3:
 plot((sales2$NA_Sales + sales2$EU_Sales), sales2$Global_Sales)
 # Add a line-of-best fit to existing plot.
-abline(coefficients(model2))
+lines(predictTest, col = "red")  #NB predictTest dataset produced via syntax below
 
 
 ###############################################################################
@@ -442,11 +444,11 @@ abline(coefficients(model2))
 # Compare with observed values for a number of records (test data).
 
 # Load the new data file (model2_test.csv) (Test data was created in Excel)
-model2test <- read.csv(file.choose(), header=TRUE)
-head(model2test)
+model3test <- read.csv(file.choose(), header=TRUE)
+head(model3test)
 
 # Create a new object and specify the predict function.
-predictTest = predict(model2, newdata=model2test,
+predictTest = predict(model3, newdata=model3test,
                       interval='confidence')
 # Print the object.
 predictTest 
@@ -458,6 +460,7 @@ predictTest
 # Your observations and insights here...
 
 
+# Refer to the PDF report.
 
 ###############################################################################
 ###############################################################################
