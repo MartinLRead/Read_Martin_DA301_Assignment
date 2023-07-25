@@ -94,7 +94,9 @@ glimpse(sales2)
 
 ## 2a) Scatterplots
 # Create scatterplots.
-qplot(GroupedProduct_factor, Global_Sales, colour=Platform, data=sales2,geom=c('point', 'jitter'))
+scatter <- qplot(GroupedProduct_factor, Global_Sales, colour=Platform, data=sales2,geom=c('point', 'jitter'))
+library(plotly) 
+ggplotly(scatter)
 
 ## 2b) Histograms
 # Create histograms.
@@ -125,9 +127,11 @@ ggplotly(plot2)
 sales3 <- arrange(sales2, desc(Global_Sales))
 head(sales3)
 
-sapply(sales2$Global_Sales, mean)
+sapply(sales2$Global_Sales, sum)
 
-# As being product code 107.
+print(sum(sales2$Global_Sales))
+
+# As being product code 107.  For further commentary refer to the report.
 
 ###############################################################################
 ###############################################################################
@@ -214,7 +218,7 @@ labs(x = "Product", y = "Sum of Global Sales", title = "Sum of Global Sales by P
 
 # Also:
 ggplot(sales3, aes(x=NA_Sales)) + 
-geom_histogram(bins = 20) +
+geom_histogram(bins = 20) 
 
 ggplot(sales3, aes(x=EU_Sales)) + 
 geom_histogram(bins = 20)
@@ -243,9 +247,9 @@ p + geom_text(data = outliers, aes(label = Product_factor), vjust = -0.5)
 
 ## 3a) Create Q-Q Plots
 
-qqnorm(df_sales$NA_Sales)
+qqnorm(df_sales$Global_Sales)
 # Add a reference line:
-qqline(df_sales$NA_Sales, col='red')
+qqline(df_sales$Global_Sales, col='red')
 
 ## 3b) Perform Shapiro-Wilk test
 # Install and import Moments.
